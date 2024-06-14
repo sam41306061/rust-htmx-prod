@@ -1,0 +1,14 @@
+/Users/sam4130/Documents/GitHub/rust-htmx-prod/target/debug/deps/libawc-812191e89dd399bf.rmeta: /Users/sam4130/.cargo/registry/src/index.crates.io-6f17d22bba15001f/awc-2.0.3/src/lib.rs /Users/sam4130/.cargo/registry/src/index.crates.io-6f17d22bba15001f/awc-2.0.3/src/builder.rs /Users/sam4130/.cargo/registry/src/index.crates.io-6f17d22bba15001f/awc-2.0.3/src/connect.rs /Users/sam4130/.cargo/registry/src/index.crates.io-6f17d22bba15001f/awc-2.0.3/src/error.rs /Users/sam4130/.cargo/registry/src/index.crates.io-6f17d22bba15001f/awc-2.0.3/src/frozen.rs /Users/sam4130/.cargo/registry/src/index.crates.io-6f17d22bba15001f/awc-2.0.3/src/request.rs /Users/sam4130/.cargo/registry/src/index.crates.io-6f17d22bba15001f/awc-2.0.3/src/response.rs /Users/sam4130/.cargo/registry/src/index.crates.io-6f17d22bba15001f/awc-2.0.3/src/sender.rs /Users/sam4130/.cargo/registry/src/index.crates.io-6f17d22bba15001f/awc-2.0.3/src/test.rs /Users/sam4130/.cargo/registry/src/index.crates.io-6f17d22bba15001f/awc-2.0.3/src/ws.rs
+
+/Users/sam4130/Documents/GitHub/rust-htmx-prod/target/debug/deps/awc-812191e89dd399bf.d: /Users/sam4130/.cargo/registry/src/index.crates.io-6f17d22bba15001f/awc-2.0.3/src/lib.rs /Users/sam4130/.cargo/registry/src/index.crates.io-6f17d22bba15001f/awc-2.0.3/src/builder.rs /Users/sam4130/.cargo/registry/src/index.crates.io-6f17d22bba15001f/awc-2.0.3/src/connect.rs /Users/sam4130/.cargo/registry/src/index.crates.io-6f17d22bba15001f/awc-2.0.3/src/error.rs /Users/sam4130/.cargo/registry/src/index.crates.io-6f17d22bba15001f/awc-2.0.3/src/frozen.rs /Users/sam4130/.cargo/registry/src/index.crates.io-6f17d22bba15001f/awc-2.0.3/src/request.rs /Users/sam4130/.cargo/registry/src/index.crates.io-6f17d22bba15001f/awc-2.0.3/src/response.rs /Users/sam4130/.cargo/registry/src/index.crates.io-6f17d22bba15001f/awc-2.0.3/src/sender.rs /Users/sam4130/.cargo/registry/src/index.crates.io-6f17d22bba15001f/awc-2.0.3/src/test.rs /Users/sam4130/.cargo/registry/src/index.crates.io-6f17d22bba15001f/awc-2.0.3/src/ws.rs
+
+/Users/sam4130/.cargo/registry/src/index.crates.io-6f17d22bba15001f/awc-2.0.3/src/lib.rs:
+/Users/sam4130/.cargo/registry/src/index.crates.io-6f17d22bba15001f/awc-2.0.3/src/builder.rs:
+/Users/sam4130/.cargo/registry/src/index.crates.io-6f17d22bba15001f/awc-2.0.3/src/connect.rs:
+/Users/sam4130/.cargo/registry/src/index.crates.io-6f17d22bba15001f/awc-2.0.3/src/error.rs:
+/Users/sam4130/.cargo/registry/src/index.crates.io-6f17d22bba15001f/awc-2.0.3/src/frozen.rs:
+/Users/sam4130/.cargo/registry/src/index.crates.io-6f17d22bba15001f/awc-2.0.3/src/request.rs:
+/Users/sam4130/.cargo/registry/src/index.crates.io-6f17d22bba15001f/awc-2.0.3/src/response.rs:
+/Users/sam4130/.cargo/registry/src/index.crates.io-6f17d22bba15001f/awc-2.0.3/src/sender.rs:
+/Users/sam4130/.cargo/registry/src/index.crates.io-6f17d22bba15001f/awc-2.0.3/src/test.rs:
+/Users/sam4130/.cargo/registry/src/index.crates.io-6f17d22bba15001f/awc-2.0.3/src/ws.rs:
