@@ -1,0 +1,10 @@
+/Users/sam4130/Documents/GitHub/rust-htmx-prod/target/debug/deps/libfutures_channel-b0ee4e51853fe904.rmeta: /Users/sam4130/.cargo/registry/src/index.crates.io-6f17d22bba15001f/futures-channel-0.3.30/src/lib.rs /Users/sam4130/.cargo/registry/src/index.crates.io-6f17d22bba15001f/futures-channel-0.3.30/src/lock.rs /Users/sam4130/.cargo/registry/src/index.crates.io-6f17d22bba15001f/futures-channel-0.3.30/src/mpsc/mod.rs /Users/sam4130/.cargo/registry/src/index.crates.io-6f17d22bba15001f/futures-channel-0.3.30/src/mpsc/queue.rs /Users/sam4130/.cargo/registry/src/index.crates.io-6f17d22bba15001f/futures-channel-0.3.30/src/mpsc/sink_impl.rs /Users/sam4130/.cargo/registry/src/index.crates.io-6f17d22bba15001f/futures-channel-0.3.30/src/oneshot.rs
+
+/Users/sam4130/Documents/GitHub/rust-htmx-prod/target/debug/deps/futures_channel-b0ee4e51853fe904.d: /Users/sam4130/.cargo/registry/src/index.crates.io-6f17d22bba15001f/futures-channel-0.3.30/src/lib.rs /Users/sam4130/.cargo/registry/src/index.crates.io-6f17d22bba15001f/futures-channel-0.3.30/src/lock.rs /Users/sam4130/.cargo/registry/src/index.crates.io-6f17d22bba15001f/futures-channel-0.3.30/src/mpsc/mod.rs /Users/sam4130/.cargo/registry/src/index.crates.io-6f17d22bba15001f/futures-channel-0.3.30/src/mpsc/queue.rs /Users/sam4130/.cargo/registry/src/index.crates.io-6f17d22bba15001f/futures-channel-0.3.30/src/mpsc/sink_impl.rs /Users/sam4130/.cargo/registry/src/index.crates.io-6f17d22bba15001f/futures-channel-0.3.30/src/oneshot.rs
+
+/Users/sam4130/.cargo/registry/src/index.crates.io-6f17d22bba15001f/futures-channel-0.3.30/src/lib.rs:
+/Users/sam4130/.cargo/registry/src/index.crates.io-6f17d22bba15001f/futures-channel-0.3.30/src/lock.rs:
+/Users/sam4130/.cargo/registry/src/index.crates.io-6f17d22bba15001f/futures-channel-0.3.30/src/mpsc/mod.rs:
+/Users/sam4130/.cargo/registry/src/index.crates.io-6f17d22bba15001f/futures-channel-0.3.30/src/mpsc/queue.rs:
+/Users/sam4130/.cargo/registry/src/index.crates.io-6f17d22bba15001f/futures-channel-0.3.30/src/mpsc/sink_impl.rs:
+/Users/sam4130/.cargo/registry/src/index.crates.io-6f17d22bba15001f/futures-channel-0.3.30/src/oneshot.rs:

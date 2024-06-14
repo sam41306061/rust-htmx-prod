@@ -150,6 +150,15 @@ main {
 button.undone {
     background:rgb(222, 124, 12);
 }
+.htmx-indicator{
+    display:none;
+}
+.htmx-request .htmx-indicator{
+    display:inline;
+}
+.htmx-request.htmx-indicator{
+    display:inline;
+}
 
 .warning, .success {
     background: red;
