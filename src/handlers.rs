@@ -1,12 +1,12 @@
 // Import necessary libraries and modules
-// use actix_web::{post, put, get, web, HttpResponse};
-// use crate::models::{Todo, AppState};
-// use serde::Deserialize;
+use actix_web::{post, put, get, web, HttpResponse};
+use crate::models::{Todo, AppState};
+use serde::Deserialize;
 
 // Define a structure for the create todo form
 #[derive(Deserialize)]
 pub struct CreateTodo {
-    // description: String, // Field for todo description
+    the_todo: String, // Field for todo description
 }
 
 // Define an async function to handle adding a new todo

@@ -1,4 +1,5 @@
 // Import necessary libraries and modules
+
 use std::{env, io};
 
 use actix_files::Files;
@@ -7,18 +8,18 @@ use handlebars::Handlebars;
 use serde::Serialize;
 
 #[derive(Serialize)]
-struct Compliment {
+struct HomePage {
     adjective: &'static str,
     verb: &'static str,
 }
 
 #[get("/")]
-async fn compliment(hb: Data<Handlebars<'_>>) -> impl Responder {
-    let compliment = Compliment {
+async fn homepage(hb: Data<Handlebars<'_>>) -> impl Responder {
+    let homepage = HomePage {
         adjective: "most stellar",
         verb: "known and/or dreamed of",
     };
-    let html = hb.render("compliment", &compliment).unwrap();
+    let html = hb.render("index", &homepage).unwrap();
 
     HttpResponse::Ok()
         .content_type("text/html")
@@ -43,7 +44,7 @@ async fn main() -> io::Result<()> {
     let server = move || App::new()
         .app_data(template_service.clone())
         .service(Files::new("/public", "web/public").show_files_listing())
-        .service(compliment);
+        .service(homepage);
 
     HttpServer::new(server)
         .bind(address)?
