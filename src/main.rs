@@ -1,65 +1,57 @@
-// Import necessary libraries and modules
-use std::{env, io};
+mod db;
+mod leptos_axum;
+mod utils;
 
-use actix_files::Files;
-use actix_web::{web::Data, get, App, HttpServer, HttpResponse, Responder};
-use handlebars::Handlebars;
-use serde::Serialize;
+use axum::{routing::get, Router};
+use axum::{http::Request, Response};
+use leptos::view;
+use leptos_axum::LeptosHtml;
+use tower_http::services::ServeDir;
 
-#[derive(Serialize)]
-struct HomePage {
-    adjective: &'static str,
-    verb: &'static str,
+async fn index() -> LeptosHtml {
+    return view! {
+<html lang="en">
+    <head>
+        <title>HTMX Is Neet!</title>
+        <meta charset="UTF-8"></meta>
+        <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+        <link href="/assets/index.css" rel="stylesheet"></link>
+        <script src="https://unpkg.com/htmx.org@2.0.0/dist/htmx.js" integrity="sha384-Xh+GLLi0SMFPwtHQjT72aPG19QvKB8grnyRbYBNIdHWc2NkCrz65jlU7YrzO6qRp" crossorigin="anonymous"></script>
+        <script src="/assets/bundle.js"></script>
+    </head>
+    <body>
+        // <div class="bg-green-100 text-blue-800 w-full h-full">hello, mom</div>
+        <div class="bg-green-100 text-blue-800 w-full h-full" hx-target="this" hx-swap="outerHTML">
+        <div id="counting"> 0 </div>
+        <button hx-post="/clicked"
+        hx-trigger="click"
+        hx-target="#counting">
+        Click To Edit
+        </button>
+    </div>
+    </body>
+</html>
+    }.into();
 }
 
-#[get("/")]
-async fn homepage(hb: Data<Handlebars<'_>>) -> impl Responder {
-    let homepage = HomePage {
-        adjective: "most stellar",
-        verb: "known and/or dreamed of",
-    };
-    let html = hb.render("index", &homepage).unwrap();
-
-    HttpResponse::Ok()
-        .content_type("text/html")
-        .body(html)
+async fn clicked(req:Request<()>) -> Response {
+    return Response::Ok()
+    .content_type("text/plain")
+    .body("You clicked me!!")
 }
 
-#[actix_web::main]
-async fn main() -> io::Result<()> {
-    let address = env::var("BIND_ADDRESS")
-        .unwrap_or_else(|_err| "localhost:8080".to_string());
 
-    let template_service = {
-        let mut handlebars = Handlebars::new();
+#[tokio::main]
+async fn main() {
+    env_logger::init();
 
-        handlebars
-            .register_templates_directory(".html", "web/templates")
-            .unwrap();
 
-        Data::new(handlebars)
-    };
+    let app = Router::new()
+        .route("/", get(index))
+        .nest_service("/assets", ServeDir::new("dist"));
 
-    let server = move || App::new()
-        .app_data(template_service.clone())
-        .service(Files::new("/public", "web/public").show_files_listing())
-        .service(homepage);
-
-    HttpServer::new(server)
-        .bind(address)?
-        .run()
+    axum::Server::bind(&"0.0.0.0:42069".parse().unwrap())
+        .serve(app.into_make_service())
         .await
+        .unwrap();
 }
-    // Step 1: Initialize the HttpServer with routes
-    // HttpServer::new(|| {
-        // App::new()
-            // .service(handlers::add_todo)
-            // .service(handlers::get_todos)
-            // .service(handlers::mark_todo_done)
-            // .service(handlers::mark_todo_undone)
-    // })
-
-    // Step 2: Bind the server to the address and run it
-    // .bind("127.0.0.1:8080")?
-    // .run()
-    // .await

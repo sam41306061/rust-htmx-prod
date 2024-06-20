@@ -1,69 +1,135 @@
-// Import necessary libraries and modules
-// use sqlx::SqlitePool;
-// use crate::models::Todo;
+use std::time::Duration;
 
-impl Todo {
-    // Async function to save a new todo to the database
-    pub async fn save_new_todo(
-        // Self reference
-        &self, 
-        
-        // Reference to the database connection pool
-        pool: &SqlitePool
-    ) -> Result<(), sqlx::Error> {
-        // Step 1: Write the SQL query to insert a new todo
-        // let query = "INSERT INTO todos (description, done) VALUES (?, ?)";
-        
-        // Step 2: Execute the query with the Todo's data
-        // sqlx::query(query)
-            // .bind(&self.description)
-            // .bind(self.done)
-            // .execute(pool)
-            // .await?;
-        
-        // Step 3: Return success
-        // Ok(())
+use anyhow::Result;
+use log::warn;
+use tokio::sync::Mutex;
+
+#[derive(Debug, Clone, PartialEq)]
+pub enum TimingType {
+    Movement,
+    Consume,
+}
+
+#[derive(Debug, Clone)]
+pub struct Timing {
+    pub timing_type: TimingType,
+	pub start: u64,
+	pub stop: u64,
+	pub id: usize,
+}
+
+impl Timing {
+    pub fn duration(&self) -> u64 {
+        return self.stop - self.start;
     }
 
-    // Async function to fetch all todos from the database
-    pub async fn fetch_all(
-        // Reference to the database connection pool
-        pool: &SqlitePool
-    ) -> Result<Vec<Todo>, sqlx::Error> {
-        // Step 1: Write the SQL query to fetch all todos
-        // let query = "SELECT id, description, done FROM todos";
-        
-        // Step 2: Execute the query and collect results
-        // let todos = sqlx::query_as::<_, Todo>(query)
-            // .fetch_all(pool)
-            // .await?;
-        
-        // Step 3: Return the list of todos
-        // Ok(todos)
-    }
-
-    // Async function to update the status of a todo
-    pub async fn update_status(
-        // Todo ID
-        id: i32,
-        
-        // New status of the todo
-        done: bool,
-        
-        // Reference to the database connection pool
-        pool: &SqlitePool
-    ) -> Result<(), sqlx::Error> {
-        // Step 1: Write the SQL query to update the todo's status
-        // let query = "UPDATE todos SET done = ? WHERE id = ?";
-        
-        // Step 2: Execute the query with the Todo's ID and new status
-        // sqlx::query(query)
-            // .bind(done)
-            // .bind(id)
-            // .execute(pool)
-            // .await?;
-        
-        // Step 3: Return success
-        // Ok(())
+    pub fn duration_with_dir(&self) -> isize {
+        return if self.timing_type == TimingType::Movement {
+            self.duration() as isize
+        } else {
+            -(self.duration() as isize)
+        };
     }
 }
+
+#[derive(Debug, Clone)]
+pub struct Data {
+    timings: Vec<Timing>,
+    current_running: Option<Timing>,
+    id: usize,
+}
+
+impl Data {
+    fn clear(&mut self) {
+        self.timings.clear();
+        self.current_running = None;
+        self.id = 0;
+    }
+}
+
+fn now() -> u64 {
+    return std::time::SystemTime::now()
+        .duration_since(std::time::UNIX_EPOCH)
+        .unwrap_or(Duration::default())
+        .as_millis() as u64;
+}
+
+lazy_static::lazy_static! {
+    static ref DATA: Mutex<Data> = Mutex::new(Data {
+        timings: Vec::new(),
+        current_running: None,
+        id: 0,
+    });
+}
+
+pub async fn push_timing(timing_type: TimingType) -> Result<()> {
+    let mut data = DATA.lock().await;
+    if let Some(mut timing) = data.current_running.take() {
+        if timing.timing_type == timing_type {
+            timing.stop = now();
+            data.timings.push(timing);
+            return Ok(());
+        }
+        data.current_running = Some(timing);
+        return Err(anyhow::anyhow!("Mismatched timing type"));
+    }
+
+    let timing = Timing {
+        timing_type,
+        start: now(),
+        stop: 0,
+        id: data.id,
+    };
+
+    data.id += 1;
+    data.current_running = Some(timing);
+
+    return Ok(());
+}
+
+pub async fn get_timings() -> Vec<Timing> {
+    let data = DATA.lock().await;
+    let mut out = vec![];
+    if let Some(timing) = &data.current_running {
+        out.push(timing.clone());
+    }
+
+    out.extend(data.timings.clone());
+    return out;
+}
+
+pub async fn clear_timings() {
+    let mut data = DATA.lock().await;
+    data.clear();
+}
+
+#[cfg(test)]
+mod test {
+    use std::time::Duration;
+
+    use crate::db::TimingType;
+    use crate::db::clear_timings;
+    use crate::db::get_timings;
+    use crate::db::push_timing;
+
+
+    #[tokio::test]
+    async fn add_timings() -> Result<(), anyhow::Error> {
+        clear_timings().await;
+
+        push_timing(TimingType::Consume).await?;
+        assert_eq!(get_timings().await.len(), 1);
+        tokio::time::sleep(Duration::from_secs(1)).await;
+
+        push_timing(TimingType::Consume).await?;
+        let timings = get_timings().await;
+        assert_eq!(timings.len(), 1);
+        assert!(timings[0].duration() >= 1000);
+        assert!(timings[0].duration_with_dir() <= -1000);
+
+        return Ok(());
+    }
+
+}
+
+
